@@ -18,5 +18,5 @@ functions:
     events:
       - http:
           method: POST
-          path: /etudiant
+          path: /etudiants
           cors: true
