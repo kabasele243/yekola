@@ -11,6 +11,20 @@ provider:
   memorySize: 256
   stage: ${opt:stage, 'dev'}
   region: us-east-1
+  environment:
+    STUDENTS_TABLE_NAME: ${self:custom.StudentsTable.name}
+    MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
+    STUDENTS_BUCKET_NAME: ${self:custom.StudentsBucket.name}
+  iamRoleStatements:
+    - ${file(iam/StudentsTableIAM.yml):StudentsTableIAM}
+    - ${file(iam/MailQueueIAM.yml):MailQueueIAM}
+    - ${file(iam/StudentsBucketIAM.yml):StudentsBucketIAM}
+
+resources:
+  Resources:
+    StudentsTable: ${file(resources/StudentsTable.yml):StudentsTable}
+    StudentsBucket: ${file(resources/StudentsBucket.yml):StudentsBucket}
+    StudentsBucketPolicy: ${file(resources/StudentsBucket.yml):StudentsBucketPolicy}
 
 functions:
   create:
